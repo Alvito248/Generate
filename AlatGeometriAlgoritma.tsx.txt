@@ -1,0 +1,130 @@
+"use client"
+
+import { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+export default function AlatGeometriAlgoritma() {
+  const [alasSegitiga, setAlasSegitiga] = useState('')
+  const [tinggiSegitiga, setTinggiSegitiga] = useState('')
+  const [luasSegitiga, setLuasSegitiga] = useState('')
+
+  const [jariJariLingkaran, setJariJariLingkaran] = useState('')
+  const [luasLingkaran, setLuasLingkaran] = useState('')
+
+  const [sisiKubus, setSisiKubus] = useState('')
+  const [volumeKubus, setVolumeKubus] = useState('')
+
+  const [panjangBalok, setPanjangBalok] = useState('')
+  const [lebarBalok, setLebarBalok] = useState('')
+  const [tinggiBalok, setTinggiBalok] = useState('')
+  const [volumeBalok, setVolumeBalok] = useState('')
+
+  const [inputArray, setInputArray] = useState('')
+  const [arrayTerurut, setArrayTerurut] = useState('')
+
+  const hitungLuasSegitiga = () => {
+    const luas = 0.5 * Number(alasSegitiga) * Number(tinggiSegitiga)
+    setLuasSegitiga(luas.toFixed(2))
+  }
+
+  const hitungLuasLingkaran = () => {
+    const luas = Math.PI * Number(jariJariLingkaran) * Number(jariJariLingkaran)
+    setLuasLingkaran(luas.toFixed(2))
+  }
+
+  const hitungVolumeKubus = () => {
+    const volume = Math.pow(Number(sisiKubus), 3)
+    setVolumeKubus(volume.toFixed(2))
+  }
+
+  const hitungVolumeBalok = () => {
+    const volume = Number(panjangBalok) * Number(lebarBalok) * Number(tinggiBalok)
+    setVolumeBalok(volume.toFixed(2))
+  }
+
+  const urutkanArray = () => {
+    const arr = inputArray.split(',').map(Number)
+    const arrTerurut = [...arr].sort((a, b) => a - b)
+    setArrayTerurut(arrTerurut.join(', '))
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Alat Geometri dan Algoritma</h1>
+      <Tabs defaultValue="segitiga">
+        <TabsList>
+          <TabsTrigger value="segitiga">Segitiga</TabsTrigger>
+          <TabsTrigger value="lingkaran">Lingkaran</TabsTrigger>
+          <TabsTrigger value="kubus">Kubus</TabsTrigger>
+          <TabsTrigger value="balok">Balok</TabsTrigger>
+          <TabsTrigger value="urut">Pengurutan</TabsTrigger>
+        </TabsList>
+        <TabsContent value="segitiga">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="alasSegitiga">Alas</Label>
+              <Input id="alasSegitiga" value={alasSegitiga} onChange={(e) => setAlasSegitiga(e.target.value)} type="number" placeholder="Masukkan alas" />
+            </div>
+            <div>
+              <Label htmlFor="tinggiSegitiga">Tinggi</Label>
+              <Input id="tinggiSegitiga" value={tinggiSegitiga} onChange={(e) => setTinggiSegitiga(e.target.value)} type="number" placeholder="Masukkan tinggi" />
+            </div>
+            <Button onClick={hitungLuasSegitiga}>Hitung Luas</Button>
+            {luasSegitiga && <p>Luas segitiga adalah: {luasSegitiga}</p>}
+          </div>
+        </TabsContent>
+        <TabsContent value="lingkaran">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="jariJariLingkaran">Jari-jari</Label>
+              <Input id="jariJariLingkaran" value={jariJariLingkaran} onChange={(e) => setJariJariLingkaran(e.target.value)} type="number" placeholder="Masukkan jari-jari" />
+            </div>
+            <Button onClick={hitungLuasLingkaran}>Hitung Luas</Button>
+            {luasLingkaran && <p>Luas lingkaran adalah: {luasLingkaran}</p>}
+          </div>
+        </TabsContent>
+        <TabsContent value="kubus">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="sisiKubus">Panjang Sisi</Label>
+              <Input id="sisiKubus" value={sisiKubus} onChange={(e) => setSisiKubus(e.target.value)} type="number" placeholder="Masukkan panjang sisi" />
+            </div>
+            <Button onClick={hitungVolumeKubus}>Hitung Volume</Button>
+            {volumeKubus && <p>Volume kubus adalah: {volumeKubus}</p>}
+          </div>
+        </TabsContent>
+        <TabsContent value="balok">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="panjangBalok">Panjang</Label>
+              <Input id="panjangBalok" value={panjangBalok} onChange={(e) => setPanjangBalok(e.target.value)} type="number" placeholder="Masukkan panjang" />
+            </div>
+            <div>
+              <Label htmlFor="lebarBalok">Lebar</Label>
+              <Input id="lebarBalok" value={lebarBalok} onChange={(e) => setLebarBalok(e.target.value)} type="number" placeholder="Masukkan lebar" />
+            </div>
+            <div>
+              <Label htmlFor="tinggiBalok">Tinggi</Label>
+              <Input id="tinggiBalok" value={tinggiBalok} onChange={(e) => setTinggiBalok(e.target.value)} type="number" placeholder="Masukkan tinggi" />
+            </div>
+            <Button onClick={hitungVolumeBalok}>Hitung Volume</Button>
+            {volumeBalok && <p>Volume balok adalah: {volumeBalok}</p>}
+          </div>
+        </TabsContent>
+        <TabsContent value="urut">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="inputArray">Masukkan angka (pisahkan dengan koma)</Label>
+              <Input id="inputArray" value={inputArray} onChange={(e) => setInputArray(e.target.value)} placeholder="Contoh: 5,2,8,1,9" />
+            </div>
+            <Button onClick={urutkanArray}>Urutkan Array</Button>
+            {arrayTerurut && <p>Array terurut: {arrayTerurut}</p>}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}
